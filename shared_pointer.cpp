@@ -113,5 +113,7 @@ int main ()
     t2 = t8;
     t1 = t8;
 
+    SP<int> t9(nullptr); // nullptr and counter =1
+
     return 0;
 }
