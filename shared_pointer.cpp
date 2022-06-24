@@ -11,12 +11,27 @@ private:
     void exchange(SP& rhs){
         if (_counter){
             --(*_counter);
+            if (*_counter == 0){
+                delete _counter;
+                delete _data;
+                _counter = nullptr;
+                _data = nullptr;
+            }
         }
         _data = std::exchange(rhs._data, nullptr);
         _counter = std::exchange(rhs._counter, nullptr);
     }
 
     void copy(const SP& rhs){
+        if (_counter){
+            --(*_counter);
+            if (*_counter == 0){
+                delete _counter;
+                delete _data;
+                _counter = nullptr;
+                _data = nullptr;
+            }
+        }
         _data = rhs._data;
         _counter = rhs._counter;
         if (_counter){
@@ -47,9 +62,10 @@ public:
 
     SP() : _data(nullptr), _counter(nullptr){}
 
-    SP(const SP& copy) : _data(copy._data), _counter(copy._counter)
-    {
-        ++(*_counter);
+    SP(const SP& rhs){
+        if (this != &rhs) {
+            this->copy(rhs);
+        }
     }
 
     // move constructor
