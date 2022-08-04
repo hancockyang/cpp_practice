@@ -77,18 +77,12 @@ public:
     
     // overload operator, it is not a deep copy only a pointer copy
     SP& operator=(const SP& rhs){
-        if (this == &rhs || (rhs._counter == nullptr && _counter == nullptr)){
-            return *this;
-        }
         this->copy(rhs);
         return *this;
     }
 
     // move assignment
     SP& operator=(SP&& rhs) noexcept{
-        if (this == &rhs || (rhs._counter == nullptr && _counter == nullptr)){
-            return *this;
-        }
         this->exchange(rhs);
         return *this;
     }
