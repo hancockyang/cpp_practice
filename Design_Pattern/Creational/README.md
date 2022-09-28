@@ -12,3 +12,7 @@
 
 ## Factory   
 ![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Creational/Factory-GameObject2.PNG)
+
+
+## Prototype   
+![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Creational/Prototype-GameObject.PNG)

@@ -1,8 +1,10 @@
+
 #include <string>
 #include <memory>
 #include <iostream>
 #include <unordered_map>
 #include <vector>
+#include <functional>
 
 class IGameObject {
     public:
@@ -10,56 +12,73 @@ class IGameObject {
 
         virtual void ObjectPlayDefaultAnimation() = 0;
         virtual void ObjectMoveInGame() = 0;
-        virtual void Update() = 0;
+        virtual void Update(int, int) = 0;
         virtual void Render() = 0;
+        virtual std::shared_ptr<IGameObject> clone() = 0;
 };
 
 class Plane : public IGameObject {
     public:
-        Plane (int x, int y) {
-            std::cout<< "create plane"<<std::endl;
+        Plane (int x, int y) : _x(x), _y(y) {
+            std::cout<< "create plane at " <<"x = " << _x << " y = " << _y <<std::endl;
             ObjectCreated++;
         }
 
         void ObjectPlayDefaultAnimation () override{}
         void ObjectMoveInGame () override{}
-        void Update () override{}
+        void Update (int x, int y) override{
+            _x = x;
+            _y = y;
+        }
         void Render () override{}
-        static IGameObject* Create () {
-            return new Plane (0, 0);
+        static std::shared_ptr<IGameObject> Create () {
+            return std::make_shared<Plane>(0, 0);
         }
 
+        std::shared_ptr<IGameObject> clone() {
+            return std::make_shared<Plane>(_x, _y);
+        }
         static void print () {
             std::cout<<"created " << ObjectCreated << " plane." << std::endl;
         }
     private:
         static int ObjectCreated;
+        int _x, _y;
 
 };
 
 class Boat : public IGameObject {
     public:
-        Boat (int x, int y) {
-            std::cout<< "create boat"<<std::endl;
+        Boat (int x, int y) : _x(x), _y(y) {
+            std::cout<< "create boat at " <<"x = " << x << " y = " << y <<std::endl;
             ObjectCreated++;
         }
         void ObjectPlayDefaultAnimation () override{}
         void ObjectMoveInGame () override{}
-        void Update () override{}
-        void Render () override{}
-        static IGameObject* Create () {
-            return new Boat (0, 0);
+        void Update (int x, int y ) override{
+            _x = x;
+            _y = y;
         }
+        void Render () override{}
+        static std::shared_ptr<IGameObject> Create () {
+            return std::make_shared<Boat>(0, 0);
+        }
+
+        std::shared_ptr<IGameObject> clone() {
+            return std::make_shared<Boat>(_x, _y);
+        }
+
         static void print () {
             std::cout<<"created " << ObjectCreated << " plane." << std::endl;
         }
     private:
         static int ObjectCreated;
+        int _x, _y;
 
 };
 
 class MyGameObjectFactory {
-    typedef IGameObject *(*CreateObjectCallback) ();
+    typedef std::shared_ptr<IGameObject> (*CreateObjectCallback) ();
 
     public:
         static void RegisterObject(const std::string& type, CreateObjectCallback cb) {
@@ -67,13 +86,13 @@ class MyGameObjectFactory {
             s_Objects[type] = cb;
         }
 
-        static void UnregisterOjbect(const std::string& type) {
+        static void UnregisterObject(const std::string& type) {
             std::cout<<"unregister " << type << std::endl;
             s_Objects.erase(type);
         }
 
 
-        static IGameObject* CreateSingleObject(const std::string& type) {
+        static std::shared_ptr<IGameObject> CreateSingleObject(const std::string& type) {
             CallbackHashmap::iterator it = s_Objects.find(type);
 
             if (it != s_Objects.end()) {
@@ -100,22 +119,20 @@ int main (){
     MyGameObjectFactory::RegisterObject("plane", Plane::Create);
     MyGameObjectFactory::RegisterObject("boat", Boat::Create);
 
-    std::vector<IGameObject*> gameCollection;
+    std::vector<std::shared_ptr<IGameObject>> gameCollection;
 
-    IGameObject* object1 = MyGameObjectFactory::CreateSingleObject("plane");
-    IGameObject* object2 = MyGameObjectFactory::CreateSingleObject("plane");
-    IGameObject* object3 = MyGameObjectFactory::CreateSingleObject("boat");
-    IGameObject* object4 = MyGameObjectFactory::CreateSingleObject("plane");
+    std::shared_ptr<IGameObject> object1 = MyGameObjectFactory::CreateSingleObject("plane");
+    std::shared_ptr<IGameObject> object2 = MyGameObjectFactory::CreateSingleObject("plane");
+    std::shared_ptr<IGameObject> object3 = MyGameObjectFactory::CreateSingleObject("boat");
+    std::shared_ptr<IGameObject> object4 = MyGameObjectFactory::CreateSingleObject("plane");
+    object1->Update(1, 0);
+    
+    std::shared_ptr<IGameObject> object5 = object1->clone();
 
     gameCollection.push_back(object1);
     gameCollection.push_back(object2);
     gameCollection.push_back(object3);
     gameCollection.push_back(object4);
-
-    delete object1;
-    delete object2;
-    delete object3;
-    delete object4;
 
 
     return 0;
