@@ -116,8 +116,8 @@ int Boat::ObjectCreated = 0;
 
 int main (){
 
-    MyGameObjectFactory::RegisterObject("plane", Plane::Create);
-    MyGameObjectFactory::RegisterObject("boat", Boat::Create);
+    MyGameObjectFactory::RegisterObject("plane", &Plane::Create);
+    MyGameObjectFactory::RegisterObject("boat", &Boat::Create);
 
     std::vector<std::shared_ptr<IGameObject>> gameCollection;
 
