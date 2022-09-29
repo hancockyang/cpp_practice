@@ -1,4 +1,3 @@
-
 #include <string>
 #include <memory>
 #include <iostream>
@@ -78,7 +77,8 @@ class Boat : public IGameObject {
 };
 
 class MyGameObjectFactory {
-    typedef std::shared_ptr<IGameObject> (*CreateObjectCallback) ();
+    //typedef std::shared_ptr<IGameObject> (*CreateObjectCallback) ();
+    typedef std::function<std::shared_ptr<IGameObject>()> CreateObjectCallback;
 
     public:
         static void RegisterObject(const std::string& type, CreateObjectCallback cb) {
