@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <memory>
 
 class Component 
 {
@@ -21,23 +22,23 @@ class SimpleComponent : public Component
 class Decorator : public Component 
 {
     protected:
-        Component *component;
+        std::shared_ptr<Component> component;
     
     public:
-        Decorator (Component * _component) : component {_component} 
+        Decorator (std::shared_ptr<Component> _component) : component {_component} 
         {
         }
 
         std::string printOut () const override 
         {
-            return this -> component -> printOut();
+            return component -> printOut();
         }
 };
 
 class Email : public Decorator
 {
     public:
-        Email (Component* _component) : Decorator {_component} {};
+        Email (std::shared_ptr<Component> _component) : Decorator {_component} {};
 
         std::string printOut () const override
         {
@@ -49,7 +50,7 @@ class Email : public Decorator
 class SMS : public Decorator
 {
     public:
-        SMS (Component* _component) : Decorator {_component} {};
+        SMS (std::shared_ptr<Component> _component) : Decorator {_component} {};
 
         std::string printOut () const override
         {
@@ -61,7 +62,7 @@ class SMS : public Decorator
 class Whatsapp : public Decorator
 {
     public:
-        Whatsapp (Component* _component) : Decorator {_component} {};
+        Whatsapp (std::shared_ptr<Component> _component) : Decorator {_component} {};
 
         std::string printOut () const override
         {
@@ -74,18 +75,14 @@ class Whatsapp : public Decorator
 
 int main() 
 {
-    Component *messge = new SimpleComponent;
+    std::shared_ptr<Component> messge = std::make_shared<SimpleComponent>();
 
-    Component *email = new Email(messge);
-    Component *whatsapp = new Whatsapp(email);
-    Component *sms = new SMS(whatsapp);
+    std::shared_ptr<Component> email = std::make_shared<Email>(messge);
+    std::shared_ptr<Component> whatsapp = std::make_shared<Whatsapp>(email);
+    std::shared_ptr<Component>sms = std::make_shared<SMS>(&whatsapp);
 
     std::string ss = sms -> printOut();
     std::cout<<ss<<std::endl;
-    delete sms;
-    delete whatsapp;
-    delete email;
-    delete messge;
 
     return 0;
 }

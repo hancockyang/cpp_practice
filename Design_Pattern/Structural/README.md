@@ -24,3 +24,8 @@
 ## Facade   
 
 ![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Structural/Facade.PNG)
+
+
+## Proxy   
+
+![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Structural/Proxy.PNG)
