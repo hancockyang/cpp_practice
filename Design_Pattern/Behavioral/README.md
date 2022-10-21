@@ -10,3 +10,9 @@
 
 
 ![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Chain-of-responsibility-photoshop.PNG)
+
+
+## Mediator
+
+
+![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Mediator.PNG)
