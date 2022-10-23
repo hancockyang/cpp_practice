@@ -22,3 +22,9 @@
 
 
 ![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Memento.PNG)
+
+
+## Strategy 
+
+
+![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Strategy.PNG)
