@@ -28,3 +28,8 @@
 
 
 ![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Strategy.PNG)
+
+## Template 
+
+
+![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Template.PNG)
