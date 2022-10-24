@@ -15,6 +15,7 @@ class MontherBoard;
 class IVistor
 {
     public:
+        virtual ~IVistor() = default;
         virtual void visitCPU(const CPU* ) const = 0;
         virtual void visitGPU(const GPU* ) const = 0;
         virtual void visitMontherBoard(const MontherBoard* ) const = 0;
@@ -23,6 +24,7 @@ class IVistor
 class IElement
 {
     public:
+        virtual ~IElement() = default;
         virtual void runTest(IVistor* ) const = 0;
         virtual const std::string getName() const = 0;
 };

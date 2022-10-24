@@ -39,3 +39,9 @@
 
 
 ![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Visitor.PNG)
+
+
+## Observer 
+
+
+![alt text](https://github.com/hancockyang/cpp_practice/blob/main/Design_Pattern/Behavioral/Observer.PNG)
