@@ -65,7 +65,6 @@ class StateB : public IState
         {
             return "Current State is B\n";
         }
-
 };
 
 class StateC : public IState
